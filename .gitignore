@@ -1,0 +1,5 @@
+venv/
+shell.nix
+.envrc
+img/out
+!img/out/.gitkeep
