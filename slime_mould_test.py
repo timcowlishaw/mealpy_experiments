@@ -5,11 +5,11 @@ from PIL import Image
 
 
 #Open the image, we're gonna try to get the slime mould to mimick the *image itself* as a "simple" test before we extend to edge detection.
-image = Image.open("img/checker32.jpg")
+image = Image.open("img/woodcut128.jpg")
 image_array = np.array(image)
 
 #How big is the image along each side? We need this in a few places below.
-IMAGE_DIM=32
+IMAGE_DIM=128
 
 #Keep track of what iteration we're in. This is a bit of a hack so we can access it from within the objective function and output an image with the right name
 current_iteration = 1
@@ -23,7 +23,7 @@ def objective_function(solution):
     # Make an image of the current slime mould position
     outimage = Image.fromarray(reshaped)
     # Save this image with the current iteration number
-    outimage.convert("L").save("img/out/iteration_%05d.jpg" % current_iteration)
+    outimage.convert("L").save("img/out/iteration_%06d.jpg" % current_iteration)
     # Increment the current iteration number
     current_iteration += 1
     #Work out the difference between the current slime mould position and the image we want to emulate
@@ -45,7 +45,7 @@ problem_dict = {
 
 # We create the slime mould solver, these parameters i have set pretty arbitrarily, we can look into them later.
 # The number of iterations that actually get run are epoch*pop_size, so in this case 5000.
-model = SMA.DevSMA(epoch=2000, pop_size=5, p_t = 0.03)
+model = SMA.DevSMA(epoch=50000, pop_size=5, p_t = 0.03)
 # And we pass the problem dictionary we set up above and start solving.
 g_best = model.solve(problem_dict)
 print(f"Solution: {g_best.solution}, Fitness: {g_best.target.fitness}")
